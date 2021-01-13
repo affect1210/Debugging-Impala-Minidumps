@@ -4,9 +4,17 @@ This project from impala
 ## 0. Init Breakpad
 Downloading Python dependencie and toolchain dependencies and install.
 ```
-$ source ./bin/impala-config
+# Init dependencies
 $ ./init_deps.sh
+
+# Quick script
+# Get dump symbols in Breakpad's format
+$ bin/dump_breakpad_symbols.sh
+
+# Process the minidump file
+$ bin/minidump_stackwalk.sh
 ```
+
 ## 1. Get Minidump
 ```bash
 $ pidof impalad
