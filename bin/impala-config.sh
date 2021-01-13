@@ -48,7 +48,6 @@ if [[ "'$IMPALA_HOME'" =~ [[:blank:]] ]]; then
   echo "IMPALA_HOME cannot have spaces in the path"
   exit 1
 fi
-export IMPALA_HOME
 
 export IMPALA_TOOLCHAIN=${IMPALA_TOOLCHAIN-"$IMPALA_HOME/toolchain"}
 if [ -z "$IMPALA_TOOLCHAIN" ]; then
