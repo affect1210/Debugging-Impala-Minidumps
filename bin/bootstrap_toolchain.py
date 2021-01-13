@@ -684,7 +684,7 @@ def main():
   # Create the toolchain directory if necessary
   create_directory_from_env_var("IMPALA_TOOLCHAIN")
 
-  use_kudu_stub = os.environ["KUDU_IS_SUPPORTED"] != "true"
+  # use_kudu_stub = os.environ["KUDU_IS_SUPPORTED"] != "true"
 
   downloads = []
   downloads += get_toolchain_downloads()

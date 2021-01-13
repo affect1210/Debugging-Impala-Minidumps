@@ -86,8 +86,8 @@ unset IMPALA_BREAKPAD_URL
 #unset IMPALA_CYRUS_SASL_URL
 #export IMPALA_FLATBUFFERS_VERSION=1.6.0
 #unset IMPALA_FLATBUFFERS_URL
-#export IMPALA_GCC_VERSION=4.9.2
-#unset IMPALA_GCC_URL
+export IMPALA_GCC_VERSION=4.9.2
+unset IMPALA_GCC_URL
 #export IMPALA_GDB_VERSION=7.9.1-p1
 #unset IMPALA_GDB_URL
 #export IMPALA_GFLAGS_VERSION=2.2.0-p2
@@ -304,6 +304,9 @@ fi
 # If true, will not call $IMPALA_HOME/bin/bootstrap_toolchain.py.
 export SKIP_TOOLCHAIN_BOOTSTRAP=${SKIP_TOOLCHAIN_BOOTSTRAP-false}
 
+# If true, will not download python dependencies.
+export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
+
 # This flag is used in $IMPALA_HOME/cmake_modules/toolchain.cmake.
 # If it's 0, Impala will be built with the compiler in the toolchain directory.
 #export USE_SYSTEM_GCC=${USE_SYSTEM_GCC-0}
@@ -381,7 +384,7 @@ export SKIP_TOOLCHAIN_BOOTSTRAP=${SKIP_TOOLCHAIN_BOOTSTRAP-false}
 #  export METASTORE_DB=${METASTORE_DB-$(cut -c-63 <<< HMS$ESCAPED_IMPALA_HOME)}
 #fi
 # Set the Hive binaries in the path
-export PATH="$HIVE_HOME/bin:$PATH"
+# export PATH="$HIVE_HOME/bin:$PATH"
 
 #export SENTRY_POLICY_DB=${SENTRY_POLICY_DB-$(cut -c-63 <<< SP$ESCAPED_IMPALA_HOME)}
 #if [[ "${TARGET_FILESYSTEM}" == "s3" ]]; then
@@ -582,7 +585,8 @@ export PATH="$HIVE_HOME/bin:$PATH"
 #export IMPALA_COMMON_DIR="$IMPALA_HOME/common"
 #export PATH="$IMPALA_TOOLCHAIN/gdb-$IMPALA_GDB_VERSION/bin:$PATH"
 #export PATH="$IMPALA_HOME/bin:$IMPALA_TOOLCHAIN/cmake-$IMPALA_CMAKE_VERSION/bin/:$PATH"
-#
+export PATH="$IMPALA_HOME/bin:$PATH"
+
 #export HADOOP_CONF_DIR="$IMPALA_FE_DIR/src/test/resources"
 ## The include and lib paths are needed to pick up hdfs.h and libhdfs.*
 ## Allow overriding in case we want to point to a package/install with a different layout.

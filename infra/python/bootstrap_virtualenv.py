@@ -380,11 +380,11 @@ if __name__ == "__main__":
       " LD_LIBRARY_PATH that should be used when running python from the virtualenv.")
   options, args = parser.parse_args()
 
-  if options.print_ld_library_path:
-    kudu_client_dir = find_kudu_client_install_dir()
-    print(os.path.pathsep.join([os.path.join(kudu_client_dir, 'lib'),
-                                    os.path.join(kudu_client_dir, 'lib64')]))
-    sys.exit()
+  # if options.print_ld_library_path:
+  #   kudu_client_dir = find_kudu_client_install_dir()
+  #   print(os.path.pathsep.join([os.path.join(kudu_client_dir, 'lib'),
+  #                                   os.path.join(kudu_client_dir, 'lib64')]))
+  #   sys.exit()
 
   logging.basicConfig(level=getattr(logging, options.log_level))
   if options.rebuild:
@@ -392,6 +392,6 @@ if __name__ == "__main__":
 
   # Complete as many bootstrap steps as possible (see file comment for the steps).
   setup_virtualenv_if_not_exists()
-  if install_compiled_deps_if_possible():
-    install_kudu_client_if_possible()
-    install_adls_deps()
+  # if install_compiled_deps_if_possible():
+  #   install_kudu_client_if_possible()
+  #   install_adls_deps()

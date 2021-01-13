@@ -38,12 +38,12 @@ fi
 # Note: this could go wrong if we have used two different versions of
 # Python to build Thrift on this machine, and the first version is not
 # compatible with the second.
-for PYTHON_DIR in ${THRIFT_HOME}/python/lib{64,}; do
-    [[ -d ${PYTHON_DIR} ]] || continue
-    for PKG_DIR in ${PYTHON_DIR}/python*/site-packages; do
-      PYTHONPATH=${PYTHONPATH}:${PKG_DIR}/
-    done
-done
+# for PYTHON_DIR in ${THRIFT_HOME}/python/lib{64,}; do
+#     [[ -d ${PYTHON_DIR} ]] || continue
+#     for PKG_DIR in ${PYTHON_DIR}/python*/site-packages; do
+#       PYTHONPATH=${PYTHONPATH}:${PKG_DIR}/
+#     done
+# done
 
 # Add Hive after Thrift because Hive supplies its own Thrift modules
-PYTHONPATH=${PYTHONPATH}:${HIVE_HOME}/lib/py
+# PYTHONPATH=${PYTHONPATH}:${HIVE_HOME}/lib/py
