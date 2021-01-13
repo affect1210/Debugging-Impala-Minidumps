@@ -72,19 +72,16 @@ bootstrap_dependencies() {
       echo "Finished downloading Python dependencies"
     fi
   fi
-  # Populate necessary thirdparty components unless it's set to be skipped.
-  if [[ "${SKIP_TOOLCHAIN_BOOTSTRAP}" = true ]]; then
-    echo "SKIP_TOOLCHAIN_BOOTSTRAP is true, skipping toolchain bootstrap."
-  else
-    echo ">>> Downloading and extracting toolchain dependencies."
-    "$IMPALA_HOME/bin/bootstrap_toolchain.py"
-    echo "Toolchain bootstrap complete."
+
+  echo ">>> Init python virtualenv."
+  $IMPALA_HOME/bin/impala-python -V
+
+  echo ">>> Downloading and extracting toolchain dependencies."
+  if [ ! -d "$IMPALA_TOOLCHAIN/breakpad-$IMPALA_BREAKPAD_VERSION" ];then
+    tar -zxf $IMPALA_TOOLCHAIN/breakpad-$IMPALA_BREAKPAD_VERSION*gz -C $IMPALA_TOOLCHAIN
   fi
+  echo ">>> Finished extracting toolchain dependencies."
 }
 
 
 bootstrap_dependencies
-
-echo "Execute dump_breakpad_symbols bootstrap.py."
-$IMPALA_HOME/bin/dump_breakpad_symbols.py
-

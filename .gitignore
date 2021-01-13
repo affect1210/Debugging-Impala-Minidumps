@@ -58,7 +58,8 @@ avro_schemas/
 logs/
 
 # Impala toolchain directory
-toolchain/
+# toolchain/
+toolchain/breakpad-97a98836768f8f0154f8f86e5e14c2bb7e74132e-p2
 
 # Core dumps and crash reports
 core
