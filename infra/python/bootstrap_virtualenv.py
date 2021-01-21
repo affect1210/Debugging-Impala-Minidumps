@@ -170,7 +170,7 @@ def exec_pip_install(args, cc="no-cc-available", env=None):
 
   # Finally, we want to install the packages from our own internal python lib
   local_package_install_cmd = impala_pip_base_cmd + \
-      ['-e', os.path.join(os.getenv('IMPALA_HOME'), 'lib', 'python')]
+      ['-e', os.path.join(os.getenv('IMPALA_TOOL_HOME'), 'lib', 'python')]
   exec_cmd(local_package_install_cmd)
 
 

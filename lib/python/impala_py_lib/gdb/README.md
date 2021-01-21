@@ -7,7 +7,7 @@ To use the functions, source impala-gdb.py as follows:
 
 ```
 
-(gdb) source $IMPALA_HOME/lib/python/impala_py_lib/gdb/impala-gdb.py
+(gdb) source $IMPALA_TOOL_HOME/lib/python/impala_py_lib/gdb/impala-gdb.py
 
 ```
 

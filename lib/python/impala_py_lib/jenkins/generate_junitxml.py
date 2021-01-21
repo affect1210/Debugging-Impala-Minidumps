@@ -30,7 +30,7 @@ from xml.etree import ElementTree as ET
 
 from datetime import datetime as dt
 
-IMPALA_HOME = os.getenv('IMPALA_HOME', '.')
+IMPALA_TOOL_HOME = os.getenv('IMPALA_TOOL_HOME', '.')
 SCRIPT_NAME, _ = os.path.splitext(os.path.basename(__file__))
 JUNITXML_LOGDIR = os.path.join(os.getenv("IMPALA_LOGS_DIR", "."), 'extra_junit_xml_logs')
 
@@ -41,7 +41,7 @@ class JunitReport(object):
   Generally, a caller who invokes this script from bash doesn't need to do
   more than supply the necessary command line parameters. The JunitReport
   class is instantiated using those initial inputs, and a timestamped XML
-  file is output to the $IMPALA_HOME/logs/extra_junit_xml_logs/.
+  file is output to the $IMPALA_TOOL_HOME/logs/extra_junit_xml_logs/.
 
   Log files are timestamped, so they will not overwrite previous files containing
   output of the same step.
@@ -240,7 +240,7 @@ def get_options():
 def main():
   """
   Create a report for each invocation of the script, and output the results
-  of the test case to an XML file within $IMPALA_HOME/logs/extra_junit_xml_logs.
+  of the test case to an XML file within $IMPALA_TOOL_HOME/logs/extra_junit_xml_logs.
   The log file name will use "phase" and "step" values provided on the command
   line to structure the report. The XML report filename will follow the form:
 

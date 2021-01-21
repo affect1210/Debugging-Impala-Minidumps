@@ -20,7 +20,7 @@
 # the third-party dependencies for Impala. The script expects bin/impala-config.sh to be
 # sourced to initialize various environment variables (including environment variables
 # specifying the versions for components). It verifies that bin/impala-config.sh
-# has been sourced by verifying that IMPALA_HOME is set. This script will fail if an
+# has been sourced by verifying that IMPALA_TOOL_HOME is set. This script will fail if an
 # expected environment variable is not present.
 #
 # The following environment variables control the behavior of this script:
@@ -647,7 +647,7 @@ def get_kudu_downloads(use_kudu_stub):
 
 
 def main():
-  """Validates that bin/impala-config.sh has been sourced by verifying that $IMPALA_HOME
+  """Validates that bin/impala-config.sh has been sourced by verifying that $IMPALA_TOOL_HOME
   and $IMPALA_TOOLCHAIN are in the environment. We assume that if these are set, then
   IMPALA_<PACKAGE>_VERSION environment variables are also set. This will create the
   directory specified by $IMPALA_TOOLCHAIN if it does not already exist. Then, it will
@@ -676,7 +676,7 @@ def main():
   # 'sh' module logs at every execution, which is too noisy
   logging.getLogger("sh").setLevel(logging.WARNING)
 
-  if not os.environ.get("IMPALA_HOME"):
+  if not os.environ.get("IMPALA_TOOL_HOME"):
     logging.error("Impala environment not set up correctly, make sure "
           "impala-config.sh is sourced.")
     sys.exit(1)

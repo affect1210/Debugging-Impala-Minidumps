@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Source this file from the $IMPALA_HOME directory to
-# setup your environment. If $IMPALA_HOME is undefined
+# Source this file from the $IMPALA_TOOL_HOME directory to
+# setup your environment. If $IMPALA_TOOL_HOME is undefined
 # this script will set it to the current working directory.
 #
 # Some config variables can be overridden. All overridable variables can be overridden
@@ -34,22 +34,22 @@
 # this script because scripts outside this repository may need to be updated and that
 # is not practical at this time.
 
-if ! [[ "'$IMPALA_HOME'" =~ [[:blank:]] ]]; then
-  if [ -z "$IMPALA_HOME" ]; then
+if ! [[ "'$IMPALA_TOOL_HOME'" =~ [[:blank:]] ]]; then
+  if [ -z "$IMPALA_TOOL_HOME" ]; then
     if [[ ! -z "$ZSH_NAME" ]]; then
-      export IMPALA_HOME=$(dirname "$(cd $(dirname ${(%):-%x}) >/dev/null && pwd)")
+      export IMPALA_TOOL_HOME=$(dirname "$(cd $(dirname ${(%):-%x}) >/dev/null && pwd)")
     else
-      export IMPALA_HOME=$(dirname "$(cd $(dirname "${BASH_SOURCE[0]}") >/dev/null && pwd)")
+      export IMPALA_TOOL_HOME=$(dirname "$(cd $(dirname "${BASH_SOURCE[0]}") >/dev/null && pwd)")
     fi
   fi
 fi
 
-if [[ "'$IMPALA_HOME'" =~ [[:blank:]] ]]; then
-  echo "IMPALA_HOME cannot have spaces in the path"
+if [[ "'$IMPALA_TOOL_HOME'" =~ [[:blank:]] ]]; then
+  echo "IMPALA_TOOL_HOME cannot have spaces in the path"
   exit 1
 fi
 
-export IMPALA_TOOLCHAIN=${IMPALA_TOOLCHAIN-"$IMPALA_HOME/toolchain"}
+export IMPALA_TOOLCHAIN=${IMPALA_TOOLCHAIN-"$IMPALA_TOOL_HOME/toolchain"}
 if [ -z "$IMPALA_TOOLCHAIN" ]; then
   echo "IMPALA_TOOLCHAIN must be specified. Please set it to a valid directory or"\
        "leave it unset."
@@ -203,9 +203,9 @@ export IMPALA_TOOLCHAIN_HOST
 # Source the branch and local config override files here to override any
 # variables above or any variables below that allow overriding via environment
 # variable.
-#. "$IMPALA_HOME/bin/impala-config-branch.sh"
-if [ -f "$IMPALA_HOME/bin/impala-config-local.sh" ]; then
-  . "$IMPALA_HOME/bin/impala-config-local.sh"
+#. "$IMPALA_TOOL_HOME/bin/impala-config-branch.sh"
+if [ -f "$IMPALA_TOOL_HOME/bin/impala-config-local.sh" ]; then
+  . "$IMPALA_TOOL_HOME/bin/impala-config-local.sh"
 fi
 
 #export CDH_HIVE_URL=${CDH_HIVE_URL-}
@@ -300,13 +300,13 @@ fi
 # overridden.                                                                           #
 #########################################################################################
 
-# If true, will not call $IMPALA_HOME/bin/bootstrap_toolchain.py.
+# If true, will not call $IMPALA_TOOL_HOME/bin/bootstrap_toolchain.py.
 export SKIP_TOOLCHAIN_BOOTSTRAP=${SKIP_TOOLCHAIN_BOOTSTRAP-false}
 
 # If true, will not download python dependencies.
 export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 
-# This flag is used in $IMPALA_HOME/cmake_modules/toolchain.cmake.
+# This flag is used in $IMPALA_TOOL_HOME/cmake_modules/toolchain.cmake.
 # If it's 0, Impala will be built with the compiler in the toolchain directory.
 #export USE_SYSTEM_GCC=${USE_SYSTEM_GCC-0}
 
@@ -332,9 +332,9 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 
 #export IS_OSX="$(if [[ "$OSTYPE" == "darwin"* ]]; then echo true; else echo false; fi)"
 
-#export HADOOP_LZO="${HADOOP_LZO-$IMPALA_HOME/../hadoop-lzo}"
-#export IMPALA_LZO="${IMPALA_LZO-$IMPALA_HOME/../Impala-lzo}"
-#export IMPALA_AUX_TEST_HOME="${IMPALA_AUX_TEST_HOME-$IMPALA_HOME/../Impala-auxiliary-tests}"
+#export HADOOP_LZO="${HADOOP_LZO-$IMPALA_TOOL_HOME/../hadoop-lzo}"
+#export IMPALA_LZO="${IMPALA_LZO-$IMPALA_TOOL_HOME/../Impala-lzo}"
+#export IMPALA_AUX_TEST_HOME="${IMPALA_AUX_TEST_HOME-$IMPALA_TOOL_HOME/../Impala-auxiliary-tests}"
 #export TARGET_FILESYSTEM="${TARGET_FILESYSTEM-hdfs}"
 #export ERASURE_CODING="${ERASURE_CODING-false}"
 #export FILESYSTEM_PREFIX="${FILESYSTEM_PREFIX-}"
@@ -360,7 +360,7 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #export WAREHOUSE_LOCATION_PREFIX="${WAREHOUSE_LOCATION_PREFIX-}"
 #export LOCAL_FS="file:${WAREHOUSE_LOCATION_PREFIX}"
 
-#ESCAPED_IMPALA_HOME=$(sed "s/[^0-9a-zA-Z]/_/g" <<< "$IMPALA_HOME")
+#ESCAPED_IMPALA_TOOL_HOME=$(sed "s/[^0-9a-zA-Z]/_/g" <<< "$IMPALA_TOOL_HOME")
 #if $USE_CDP_HIVE; then
 #  export HIVE_HOME="$CDP_COMPONENTS_HOME/apache-hive-${IMPALA_HIVE_VERSION}-bin"
 #  export HIVE_SRC_DIR=${HIVE_SRC_DIR_OVERRIDE:-"${CDP_COMPONENTS_HOME}/hive-\
@@ -372,7 +372,7 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #  # It is likely that devs will want to work with both the versions of metastore
 #  # if cdp hive is being used change the metastore db name, so we don't have to
 #  # format the metastore db everytime we switch between hive versions
-#  export METASTORE_DB=${METASTORE_DB-"$(cut -c-59 <<< HMS$ESCAPED_IMPALA_HOME)_cdp"}
+#  export METASTORE_DB=${METASTORE_DB-"$(cut -c-59 <<< HMS$ESCAPED_IMPALA_TOOL_HOME)_cdp"}
 #else
 #  export HIVE_HOME="$CDH_COMPONENTS_HOME/hive-${IMPALA_HIVE_VERSION}"
 #  # Allow overriding of Hive source location in case we want to build Impala without
@@ -380,19 +380,19 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #  export HIVE_SRC_DIR=${HIVE_SRC_DIR_OVERRIDE:-"${HIVE_HOME}/src"}
 #  export HIVE_METASTORE_THRIFT_DIR=$HIVE_SRC_DIR/metastore/if
 #  export HBASE_HOME="$CDH_COMPONENTS_HOME/hbase-${IMPALA_HBASE_VERSION}/"
-#  export METASTORE_DB=${METASTORE_DB-$(cut -c-63 <<< HMS$ESCAPED_IMPALA_HOME)}
+#  export METASTORE_DB=${METASTORE_DB-$(cut -c-63 <<< HMS$ESCAPED_IMPALA_TOOL_HOME)}
 #fi
 # Set the Hive binaries in the path
 # export PATH="$HIVE_HOME/bin:$PATH"
 
-#export SENTRY_POLICY_DB=${SENTRY_POLICY_DB-$(cut -c-63 <<< SP$ESCAPED_IMPALA_HOME)}
+#export SENTRY_POLICY_DB=${SENTRY_POLICY_DB-$(cut -c-63 <<< SP$ESCAPED_IMPALA_TOOL_HOME)}
 #if [[ "${TARGET_FILESYSTEM}" == "s3" ]]; then
 #    # On S3, disable Sentry HDFS sync plugin.
 #    export SENTRY_PROCESSOR_FACTORIES="org.apache.sentry.api.service.thrift.SentryPolicyStoreProcessorFactory"
 #else
 #    export SENTRY_PROCESSOR_FACTORIES="org.apache.sentry.api.service.thrift.SentryPolicyStoreProcessorFactory,org.apache.sentry.hdfs.SentryHDFSServiceProcessorFactory"
 #fi
-#RANGER_POLICY_DB=${RANGER_POLICY_DB-$(cut -c-63 <<< ranger$ESCAPED_IMPALA_HOME)}
+#RANGER_POLICY_DB=${RANGER_POLICY_DB-$(cut -c-63 <<< ranger$ESCAPED_IMPALA_TOOL_HOME)}
 ## The DB script in Ranger expects the database name to be in lower case.
 #export RANGER_POLICY_DB=$(echo ${RANGER_POLICY_DB} | tr '[:upper:]' '[:lower:]')
 #
@@ -452,7 +452,7 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #  # on AWS and multiple inclusions of S3 can exceed the limit, causing the check to fail.
 #  S3_ACCESS_VALIDATED="${S3_ACCESS_VALIDATED-0}"
 #  if [[ "${S3_ACCESS_VALIDATED}" -ne 1 ]]; then
-#    if ${IMPALA_HOME}/bin/check-s3-access.sh; then
+#    if ${IMPALA_TOOL_HOME}/bin/check-s3-access.sh; then
 #      export S3_ACCESS_VALIDATED=1
 #      export DEFAULT_FS="s3a://${S3_BUCKET}"
 #    else
@@ -547,8 +547,9 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #fi
 #
 ## Directories where local cluster logs will go when running tests or loading data
-#DEFAULT_LOGS_DIR="${IMPALA_HOME}/logs"  # override by setting IMPALA_LOGS_DIR env var
+#DEFAULT_LOGS_DIR="${IMPALA_TOOL_HOME}/logs"  # override by setting IMPALA_LOGS_DIR env var
 #export IMPALA_LOGS_DIR="${IMPALA_LOGS_DIR:-$DEFAULT_LOGS_DIR}"
+export IMPALA_LOGS_DIR="${IMPALA_LOGS_DIR:-$HOME}"
 #export IMPALA_CLUSTER_LOGS_DIR="${IMPALA_LOGS_DIR}/cluster"
 #export IMPALA_DATA_LOADING_LOGS_DIR="${IMPALA_LOGS_DIR}/data_loading"
 #export IMPALA_DATA_LOADING_SQL_DIR="${IMPALA_DATA_LOADING_LOGS_DIR}/sql"
@@ -575,16 +576,16 @@ export SKIP_PYTHON_DOWNLOAD=${SKIP_PYTHON_DOWNLOAD-false}
 #export KUDU_MASTER_PORT="${KUDU_MASTER_PORT:-7051}"
 #export KUDU_MASTER_WEBUI_PORT="${KUDU_MASTER_WEBUI_PORT:-8051}"
 #
-#export IMPALA_FE_DIR="$IMPALA_HOME/fe"
-#export IMPALA_BE_DIR="$IMPALA_HOME/be"
-#export IMPALA_WORKLOAD_DIR="$IMPALA_HOME/testdata/workloads"
+#export IMPALA_FE_DIR="$IMPALA_TOOL_HOME/fe"
+#export IMPALA_BE_DIR="$IMPALA_TOOL_HOME/be"
+#export IMPALA_WORKLOAD_DIR="$IMPALA_TOOL_HOME/testdata/workloads"
 #export IMPALA_AUX_WORKLOAD_DIR="$IMPALA_AUX_TEST_HOME/testdata/workloads"
-#export IMPALA_DATASET_DIR="$IMPALA_HOME/testdata/datasets"
+#export IMPALA_DATASET_DIR="$IMPALA_TOOL_HOME/testdata/datasets"
 #export IMPALA_AUX_DATASET_DIR="$IMPALA_AUX_TEST_HOME/testdata/datasets"
-#export IMPALA_COMMON_DIR="$IMPALA_HOME/common"
+#export IMPALA_COMMON_DIR="$IMPALA_TOOL_HOME/common"
 #export PATH="$IMPALA_TOOLCHAIN/gdb-$IMPALA_GDB_VERSION/bin:$PATH"
-#export PATH="$IMPALA_HOME/bin:$IMPALA_TOOLCHAIN/cmake-$IMPALA_CMAKE_VERSION/bin/:$PATH"
-export PATH="$IMPALA_HOME/bin:$PATH"
+#export PATH="$IMPALA_TOOL_HOME/bin:$IMPALA_TOOLCHAIN/cmake-$IMPALA_CMAKE_VERSION/bin/:$PATH"
+export PATH="$IMPALA_TOOL_HOME/bin:$PATH"
 
 #export HADOOP_CONF_DIR="$IMPALA_FE_DIR/src/test/resources"
 ## The include and lib paths are needed to pick up hdfs.h and libhdfs.*
@@ -606,14 +607,14 @@ export PATH="$IMPALA_HOME/bin:$PATH"
 ## minicluster.
 #HADOOP_CLASSPATH="${HADOOP_CLASSPATH}:${HADOOP_HOME}/share/hadoop/tools/lib/*"
 #
-#export MINI_DFS_BASE_DATA_DIR="$IMPALA_HOME/cdh-${CDH_MAJOR_VERSION}-hdfs-data"
+#export MINI_DFS_BASE_DATA_DIR="$IMPALA_TOOL_HOME/cdh-${CDH_MAJOR_VERSION}-hdfs-data"
 #export PATH="$HADOOP_HOME/bin:$PATH"
 #
 #export SENTRY_HOME="$CDH_COMPONENTS_HOME/sentry-${IMPALA_SENTRY_VERSION}"
-#export SENTRY_CONF_DIR="$IMPALA_HOME/fe/src/test/resources"
+#export SENTRY_CONF_DIR="$IMPALA_TOOL_HOME/fe/src/test/resources"
 #
 #export RANGER_HOME="${CDP_COMPONENTS_HOME}/ranger-${IMPALA_RANGER_VERSION}-admin"
-#export RANGER_CONF_DIR="$IMPALA_HOME/fe/src/test/resources"
+#export RANGER_CONF_DIR="$IMPALA_TOOL_HOME/fe/src/test/resources"
 #
 ## To configure Hive logging, there's a hive-log4j2.properties[.template]
 ## file in fe/src/test/resources. To get it into the classpath earlier
@@ -736,7 +737,7 @@ export PATH="$IMPALA_HOME/bin:$PATH"
 ## ASAN needs a matching version of llvm-symbolizer to symbolize stack traces.
 #export ASAN_SYMBOLIZER_PATH="${IMPALA_TOOLCHAIN}/llvm-${IMPALA_LLVM_ASAN_VERSION}/bin/llvm-symbolizer"
 #
-#export CLUSTER_DIR="${IMPALA_HOME}/testdata/cluster"
+#export CLUSTER_DIR="${IMPALA_TOOL_HOME}/testdata/cluster"
 #
 ## The number of parallel build processes we should run at a time.
 #export IMPALA_BUILD_THREADS=${IMPALA_BUILD_THREADS-"$(nproc)"}
@@ -791,7 +792,7 @@ export PATH="$IMPALA_HOME/bin:$PATH"
 ## A marker in the environment to prove that we really did source this file
 #export IMPALA_CONFIG_SOURCED=1
 
-# echo "IMPALA_HOME             = $IMPALA_HOME"
+# echo "IMPALA_TOOL_HOME             = $IMPALA_TOOL_HOME"
 #echo "HADOOP_HOME             = $HADOOP_HOME"
 #echo "HADOOP_CONF_DIR         = $HADOOP_CONF_DIR"
 #echo "HADOOP_INCLUDE_DIR      = $HADOOP_INCLUDE_DIR"

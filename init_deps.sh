@@ -37,7 +37,7 @@ ROOT=`cd "$ROOT" >/dev/null; pwd`
 
 if [[ "'$ROOT'" =~ [[:blank:]] ]]
 then
-   echo "IMPALA_HOME cannot have spaces in the path"
+   echo "IMPALA_TOOL_HOME cannot have spaces in the path"
    exit 1
 fi
 
@@ -49,14 +49,14 @@ if [[ ! -z "${MINIKDC_REALM}" ]]; then
   NEEDS_RE_SOURCE_NOTE=0
 fi
 
-export IMPALA_HOME="$ROOT"
+export IMPALA_TOOL_HOME="$ROOT"
 if ! . "$ROOT"/bin/impala-config.sh; then
   echo "Bad configuration, aborting buildall."
   exit 1
 fi
 
-# Change to IMPALA_HOME so that coredumps, etc end up in IMPALA_HOME.
-cd "${IMPALA_HOME}"
+# Change to IMPALA_TOOL_HOME so that coredumps, etc end up in IMPALA_TOOL_HOME.
+cd "${IMPALA_TOOL_HOME}"
 
 bootstrap_dependencies() {
   if [[ "${SKIP_PYTHON_DOWNLOAD}" = true ]]; then
@@ -65,7 +65,7 @@ bootstrap_dependencies() {
     echo ">>> Downloading Python dependencies"
     # Download all the Python dependencies we need before doing anything
     # of substance. Does not re-download anything that is already present.
-    if ! "$IMPALA_HOME/infra/python/deps/download_requirements"; then
+    if ! "$IMPALA_TOOL_HOME/infra/python/deps/download_requirements"; then
       echo "Warning: Unable to download Python requirements."
       echo "Warning: bootstrap_virtualenv or other Python-based tooling may fail."
     else
@@ -74,7 +74,7 @@ bootstrap_dependencies() {
   fi
 
   echo ">>> Init python virtualenv."
-  $IMPALA_HOME/bin/impala-python -V
+  $IMPALA_TOOL_HOME/bin/impala-python -V
 
   echo ">>> Downloading and extracting toolchain dependencies."
   if [ ! -d "$IMPALA_TOOLCHAIN/breakpad-$IMPALA_BREAKPAD_VERSION" ];then

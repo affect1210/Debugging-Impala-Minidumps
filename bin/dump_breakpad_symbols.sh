@@ -28,4 +28,4 @@
   BIN_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 . $BIN_DIR/impala-config.sh
-$IMPALA_HOME/bin/dump_breakpad_symbols.py "$@"
+$IMPALA_TOOL_HOME/bin/dump_breakpad_symbols.py "$@"

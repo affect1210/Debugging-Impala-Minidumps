@@ -22,7 +22,7 @@
 # configurations, so it is best to run this in a fresh install. It also sets up the
 # ~/.bashrc for the calling user and impala-config-local.sh with some environment
 # variables to make Impala compile and run after this script is complete.
-# When IMPALA_HOME is set, the script will bootstrap Impala development in the
+# When IMPALA_TOOL_HOME is set, the script will bootstrap Impala development in the
 # location specified.
 #
 # The intended user is a person who wants to start contributing code to Impala. This
@@ -44,7 +44,7 @@
 
 set -eu -o pipefail
 
-: ${IMPALA_HOME:=~/Impala}
+: ${IMPALA_TOOL_HOME:=~/Impala}
 
 if [[ -t 1 ]] # if on an interactive terminal
 then

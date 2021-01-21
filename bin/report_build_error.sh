@@ -21,7 +21,7 @@ report_build_error() {
   ERROR_MSG=$(cd "$PWD" && awk "NR == $1" $0)
   FILENAME=$(basename -- "$0")
   echo ERROR in $0 at line $1: $ERROR_MSG
-  $IMPALA_HOME/bin/generate_junitxml.py --step "${FILENAME%.*}" \
+  $IMPALA_TOOL_HOME/bin/generate_junitxml.py --step "${FILENAME%.*}" \
     --error "Error in $0 at line $1: $ERROR_MSG"
 }
 

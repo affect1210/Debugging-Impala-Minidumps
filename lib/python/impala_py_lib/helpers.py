@@ -47,7 +47,7 @@ def exec_local_command(cmd):
     return output
 
 
-def find_all_files(fname_pattern, base_dir=os.getenv('IMPALA_HOME', '.')):
+def find_all_files(fname_pattern, base_dir=os.getenv('IMPALA_TOOL_HOME', '.')):
   """
   General utility to recursively find files matching a certain unix-like file pattern.
 

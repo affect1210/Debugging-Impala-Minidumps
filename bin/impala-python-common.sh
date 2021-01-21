@@ -16,15 +16,15 @@
 # under the License.
 
 # This file is intended to be sourced to perform common setup for
-# $IMPALA_HOME/bin/impala-py* executables.
+# $IMPALA_TOOL_HOME/bin/impala-py* executables.
 
 set -euo pipefail
-. $IMPALA_HOME/bin/report_build_error.sh
+. $IMPALA_TOOL_HOME/bin/report_build_error.sh
 setup_report_build_error
 
-. $IMPALA_HOME/bin/set-pythonpath.sh
+. $IMPALA_TOOL_HOME/bin/set-pythonpath.sh
 
-LD_LIBRARY_PATH+=":$(python "$IMPALA_HOME/infra/python/bootstrap_virtualenv.py" \
+LD_LIBRARY_PATH+=":$(python "$IMPALA_TOOL_HOME/infra/python/bootstrap_virtualenv.py" \
   --print-ld-library-path)"
 
 PY_DIR="$(dirname "$0")/../infra/python"

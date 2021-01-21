@@ -22,13 +22,13 @@
 # Setting USE_THRIFT11_GEN_PY will add Thrift 11 Python generated code rather than the
 # default Thrift Python code.
 # Used to allow importing testdata, test, etc modules from other scripts.
-export PYTHONPATH=${IMPALA_HOME}
+export PYTHONPATH=${IMPALA_TOOL_HOME}
 
 # Generated Thrift files are used by tests and other scripts.
 if [ -n "${USE_THRIFT11_GEN_PY:-}" ]; then
-  PYTHONPATH=${PYTHONPATH}:${IMPALA_HOME}/shell/build/thrift-11-gen/gen-py
+  PYTHONPATH=${PYTHONPATH}:${IMPALA_TOOL_HOME}/shell/build/thrift-11-gen/gen-py
 else
-  PYTHONPATH=${PYTHONPATH}:${IMPALA_HOME}/shell/gen-py
+  PYTHONPATH=${PYTHONPATH}:${IMPALA_TOOL_HOME}/shell/gen-py
 fi
 
 # There should be just a single version of python that created the
